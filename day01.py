@@ -11,18 +11,6 @@ data = ld.load_data(f"input{day}.txt")
 
 dial = 50
 n_zeros = 0
-
-for line in data:
-    direction, magnitude = line[0], int(line[1:])
-    if direction == 'R':
-        dial += magnitude
-    elif direction == 'L':
-        dial -= magnitude
-    if dial % 100 == 0:
-        n_zeros += 1
-print(n_zeros)
-
-dial = 50
 zero_crossings = 0
 
 for line in data:
@@ -34,8 +22,11 @@ for line in data:
     elif direction == 'L':
         dial -= magnitude
         step = -1
+    if dial % 100 == 0:
+        n_zeros += 1
     for i in range(dial_prev, dial, step):
         if i % 100 == 0:
             zero_crossings += 1
 
+print(n_zeros)
 print(zero_crossings)
