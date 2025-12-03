@@ -9,41 +9,22 @@ day = f[3:5]
 data = ld.load_data(f"example{day}.txt")
 data = ld.load_data(f"input{day}.txt")
 
-# Part 1
-ans = 0
 digits = ['9', '8', '7', '6', '5', '4', '3', '2', '1', '0']
-for line in data:
-    i = 0
-    joltage = ''
-    idx_max = len(line) - 1
-    idx_min = 1
-    while len(joltage) < 2:
-        if len(joltage) == 0 and digits[i] in line[:idx_max]:
-            joltage += digits[i]
-            idx_min = line[:idx_max].find(digits[i]) + 1
-            i = -1  # it will be increased to 0 at the end of the loop
-        elif len(joltage) == 1 and digits[i] in line[idx_min:]:
-            joltage += digits[i]
-            ans += int(joltage)
-        i += 1
+for limit in [2, 12]:
+    ans = 0
+    for line in data:
+        i = 0
+        joltage = ''
+        idx_max = len(line) - limit + 1
+        idx_min = 0
+        while len(joltage) < limit:
+            if digits[i] in line[idx_min:idx_max]:
+                joltage += digits[i]
+                idx_min = line[idx_min:idx_max].find(digits[i]) + 1 + idx_min
+                idx_max += 1
+                i = -1  # it will be increased to 0 at the end of the loop
+            if len(joltage) == limit:
+                ans += int(joltage)
+            i += 1
 
-print(ans)
-
-# Part 2: Use 12 joltages instead of 2
-ans = 0
-for line in data:
-    i = 0
-    joltage = ''
-    idx_max = len(line) - 11
-    idx_min = 0
-    while len(joltage) < 12:
-        if digits[i] in line[idx_min:idx_max]:
-            joltage += digits[i]
-            idx_min = line[idx_min:idx_max].find(digits[i]) + 1 + idx_min
-            idx_max += 1
-            i = -1  # it will be increased to 0 at the end of the loop
-        if len(joltage) == 12:
-            ans += int(joltage)
-        i += 1
-
-print(ans)
+    print(ans)
