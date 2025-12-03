@@ -23,8 +23,7 @@ for idr in id_ranges:
             if len(id) % j == 0:
                 length = len(id) // j
                 pieces = [id[k * length:(k + 1) * length] for k in range(j)]
-                all_equal = all(piece == pieces[0] for piece in pieces)
-                if all_equal:
+                if all(piece == pieces[0] for piece in pieces):
                     invalid_ids.append(i)
 
 print(ans)
