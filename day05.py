@@ -34,30 +34,23 @@ for id in available_ids:
 print(fresh_count)
 
 # Part 2
-
-# Brute force: Works on example but takes too long to run on input
-# fresh_list = []
-# for r in fresh_ranges:
-#     min_val, max_val = [int(x) for x in r.split('-')]
-#     for i in range(min_val, max_val + 1):
-#         fresh_list.append(i)
-
-# print(len(set(fresh_list)))
-
-# More efficient solution using intervals, sorting, and merging
 intervals = []
 for r in fresh_ranges:
     start, end = map(int, r.split('-'))
     intervals.append((start, end))
+# Sort the intervals by start values in ascending order
 intervals.sort(key=lambda x: x[0])
 merged = []
 current_start, current_end = intervals[0]
 for start, end in intervals[1:]:
+    # Check if intervals overlap or are contiguous
     if start <= current_end + 1:
+        # Merge intervals
         current_end = max(current_end, end)
     else:
+        # Current interval is complete
         merged.append((current_start, current_end))
+        # Move on to the next interval
         current_start, current_end = start, end
 merged.append((current_start, current_end))
-total_ids = sum(end - start + 1 for start, end in merged)
-print(total_ids)
+print(sum(end - start + 1 for start, end in merged))
