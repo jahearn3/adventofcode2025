@@ -10,7 +10,7 @@ data = ld.load_data(f"example{day}.txt")
 data = ld.load_data(f"input{day}.txt")
 
 digits = ['9', '8', '7', '6', '5', '4', '3', '2', '1', '0']
-for limit in [2, 12]:
+for limit in [2, 12]:  # 2 is for part 1; 12 is for part 2
     ans = 0
     for line in data:
         i = 0
@@ -20,7 +20,7 @@ for limit in [2, 12]:
         while len(joltage) < limit:
             if digits[i] in line[idx_min:idx_max]:
                 joltage += digits[i]
-                idx_min = line[idx_min:idx_max].find(digits[i]) + 1 + idx_min
+                idx_min += line[idx_min:idx_max].find(digits[i]) + 1
                 idx_max += 1
                 i = -1  # it will be increased to 0 at the end of the loop
             if len(joltage) == limit:

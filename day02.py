@@ -17,9 +17,9 @@ for idr in id_ranges:
     for i in range(int(first_id), int(last_id) + 1):
         id = str(i)
         first_half, second_half = id[:len(id)//2], id[len(id)//2:]
-        if first_half == second_half:
+        if first_half == second_half:  # for part 1
             ans += i
-        for j in range(2, len(id) + 1):
+        for j in range(2, len(id) + 1):  # for part 2
             if len(id) % j == 0:
                 length = len(id) // j
                 pieces = [id[k * length:(k + 1) * length] for k in range(j)]
@@ -27,4 +27,5 @@ for idr in id_ranges:
                     invalid_ids.append(i)
 
 print(ans)
+# summing the set only accounts for multiple ways an id can be invalid
 print(sum(set(invalid_ids)))
