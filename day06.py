@@ -25,3 +25,27 @@ for i in range(len(transposed)):
         totals.append(prod(transposed[i]))
 
 print(sum(totals))
+
+# Part 2
+strings = [''] * len(data[0])
+for i in range(len(strings)):
+    for j in range(len(data) - 1):
+        strings[i] += data[j][i]
+
+numbers = []
+n = []
+for i, string in enumerate(strings):
+    if string.strip() == '':
+        numbers.append(n)
+        n = []
+    else:
+        n.append(int(string.strip()))
+numbers.append(n)
+totals = []
+for i in range(len(operations)):
+    if operations[i] == '+':
+        totals.append(sum(numbers[i]))
+    elif operations[i] == '*':
+        totals.append(prod(numbers[i]))
+
+print(sum(totals))
