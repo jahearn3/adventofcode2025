@@ -91,8 +91,69 @@ for r, c in result:
         if new_circuit:
             circuits.append([r, c])
 
-# print(len(circuits))
-# print(circuits)
-
 three_largest = heapq.nlargest(3, (len(lst) for lst in circuits))
 print(three_largest[0] * three_largest[1] * three_largest[2])
+
+# Part 2
+# Pick up where we left off
+print(len(circuits))
+print(len(flat))
+next_closest_n = num_smallest + 1
+while len(circuits) > 1:
+    # next closest distance
+    idx_next = np.argpartition(flat, next_closest_n - 1)[next_closest_n - 1]
+    r, c = np.unravel_index(idx_next, distances.shape)
+    # connect circuits
+    new_circuit = True
+    i = 0
+    while i < len(circuits):
+        if r in circuits[i] and c in circuits[i]:
+            # r and c both already in circuit
+            new_circuit = False
+            i = len(circuits)
+        elif r in circuits[i]:
+            # See if c is in a different circuit
+            # circuits 0-i have already been considered
+            j = i + 1
+            c_in_circuits = False
+            while j < len(circuits):
+                if c in circuits[j]:
+                    c_in_circuits = True
+                    jc = j
+                    j = len(circuits)
+                j += 1
+            # If not, just append c
+            if c_in_circuits:
+                circuits[i].extend(circuits[jc])
+                circuits.pop(jc)
+            else:
+                circuits[i].append(c)
+            new_circuit = False
+            i = len(circuits)
+        elif c in circuits[i]:
+            # See if r is in a different circuit
+            j = i + 1
+            r_in_circuits = False
+            while j < len(circuits):
+                if r in circuits[j]:
+                    r_in_circuits = True
+                    jr = j
+                    j = len(circuits)
+                j += 1
+            # If not, just append r
+            if r_in_circuits:
+                circuits[i].extend(circuits[jr])
+                circuits.pop(jr)
+            else:
+                circuits[i].append(r)
+            new_circuit = False
+            i = len(circuits)
+        else:
+            i += 1
+    if new_circuit:
+        circuits.append([r, c])
+    next_closest_n += 1
+    if len(circuits) == 1:
+        print(pos[r][0] * pos[c][0])
+
+# 8362885995 too low
