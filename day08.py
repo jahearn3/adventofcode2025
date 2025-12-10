@@ -64,3 +64,5 @@ for r, c in result:
 three_largest = heapq.nlargest(3, (len(lst) for lst in circuits))
 print(three_largest[0] * three_largest[1] * three_largest[2])
 # 15600 too low
+
+# Need to account for two already existing circuits combining with each other
