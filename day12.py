@@ -7,7 +7,7 @@ f = os.path.basename(__file__)
 day = f[3:5]
 
 data = ld.load_data(f"example{day}.txt")
-# data = ld.load_data(f"input{day}.txt")
+data = ld.load_data(f"input{day}.txt")
 
 shapes = {}
 regions = []
@@ -27,19 +27,11 @@ for line in data:
     elif len(line) > 0:
         shapes[k].append(line)
 
-
-print(shapes)
-print(regions)
-ans = 0
+total = 0
 
 for r in regions:
     width, length, presents = r
-    presents_to_fit = []
-    for p in range(len(presents)):
-        for i in range(p):
-            presents_to_fit.append(shapes[p])
-    print('Region', r)
-    print('Shapes to fit:')
-    print(presents_to_fit)
+    if (width // 3) * (length // 3) >= sum(presents):
+        total += 1
 
-print(ans)
+print(total)
